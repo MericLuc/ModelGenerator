@@ -1,0 +1,96 @@
+<Conf>
+	<Variables> 
+		<Variable name="FLIP_FLOP" init="5"/>
+	</Variables>
+	<Headers>
+		<Header name="HEADER_1">
+			<Field 		name="FIELD_1" pos="0" size="8" value="16" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field 		name="FIELD_2" pos="8" size="8" value="90" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field_time name="FIELD_TIME" pos="16" size="32"
+						endianness="LE" swap="FALSE" invert="FALSE" format="MILLISECONDS"/>
+			<Field_size name="FIELD_SIZE" pos="48" size="8" 
+						format="SIZE_FORMAT_U8" part="SIZE_INCLUDING_HEADER" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field_id 	name="FIELD_ID" pos="56" size="16" value="52275"
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+		</Header>
+		<Header name="HEADER_2">
+			<Field 		name="FIELD_1" pos="0" size="1" value="1" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field 		name="FIELD_2" pos="1" size="7" value="9" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field_time name="FIELD_TIME" pos="8" size="32"
+						endianness="LE" swap="FALSE" invert="FALSE" format="MICROSECONDS"/>
+			<Field_size name="FIELD_SIZE" pos="40" size="8" 
+						format="SIZE_FORMAT_U16" part="SIZE_EXCLUDING_HEADER" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+		</Header>
+		<Header name="HEADER_3">
+			<Field 		name="FIELD_1" pos="0" size="8" value="90" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field 		name="FIELD_2" pos="8" size="8" value="195" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field 		name="FIELD_3" pos="16" size="10" value="519" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field 		name="FIELD_4" pos="32" size="16" value="2" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field_size name="FIELD_SIZE" pos="48" size="8" 
+						format="SIZE_FORMAT_U8" part="SIZE_INCLUDING_HEADER" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field 		name="FIELD_5" pos="56" size="3" value="5" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+		</Header>
+	</Headers>
+	<Messages>
+		<Mesg name="MESG_1" header="HEADER_1" size="10" ip_src="127.0.0.1" ip_dst="10.52.10.100"
+			  port_src="1234" port_dst="4321" fill="MESG_FILL_ZERO"/>
+		<Mesg name="MESG_2" header="HEADER_2" size="100" ip_src="127.0.0.1" ip_dst="10.101.80.10"
+			  port_src="5678" port_dst="8765" fill="MESG_FILL_RANDOM"/>
+		<Mesg name="MESG_3" header="HEADER_3" size="10" ip_src="127.0.0.1" ip_dst="30.201.80.30"
+			  port_src="1357" port_dst="8642" fill="MESG_FILL_ZERO"/>
+	</Messages>
+	<States>
+		<State name="STATE A">
+			<Operations>
+				<Op var="FLIP_FLOP" operande="=" value="0"/>
+			</Operations>
+			<State_messages>
+				<State_mesg name="MESG_1"/>
+			</State_messages>
+			<Transitions>
+				<Transit dest_state="STATE B">
+					<Condition name="FLIP_FLOP" value="0" operande="=="/>
+				</Transit>
+			</Transitions>
+		</State>
+		<State name="STATE B">
+			<Operations>
+				<Op var="FLIP_FLOP" operande="=" value="1"/>
+			</Operations>
+			<State_messages>
+				<State_mesg name="MESG_2"/>
+			</State_messages>
+			<Transitions>
+				<Transit dest_state="STATE C">
+					<Condition name="FLIP_FLOP" value="1" operande="=="/>
+				</Transit>	
+			</Transitions>
+		</State>
+		<State name="STATE C">
+			<Operations>
+				<Op var="FLIP_FLOP" operande="=" value="2"/>
+			</Operations>
+			<State_messages>
+				<State_mesg name="MESG_3"/>
+			</State_messages>
+			<Transitions>
+				<Transit dest_state="STATE A">
+					<Condition name="FLIP_FLOP" value="2" operande="=="/>
+				</Transit>	
+			</Transitions>
+		</State>
+	</States>
+</Conf>
+

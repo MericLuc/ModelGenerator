@@ -1,0 +1,98 @@
+<Conf>
+	<Variables> 
+		<Variable name="FLIP_FLOP" init="0"/>
+	</Variables>
+	<Headers>
+		<Header name="HEADER_1">
+			<Field 		name="FIELD_1" pos="0" size="5" value="16" 
+						endianness="LE" swap="FALSE" invert="TRUE"/>
+			<Field 		name="FIELD_2" pos="5" size="5" value="16" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field_time name="FIELD_TIME" pos="10" size="32"
+						endianness="LE" swap="FALSE" invert="FALSE" format="MILLISECONDS"/>
+			<Field_size name="FIELD_SIZE" pos="42" size="8" 
+						format="SIZE_FORMAT_U8" part="SIZE_INCLUDING_HEADER" 
+						endianness="LE" swap="FALSE" invert="FALSE"/>
+			<Field_id 	name="FIELD_ID" pos="62" size="16" 
+						endianness="BE" swap="TRUE" invert="TRUE"/>
+		</Header>
+	</Headers>
+	<Messages>
+		<Mesg name="MESG_1" header="HEADER_1" size="10" ip_src="127.0.0.1" ip_dst="127.0.0.1"
+			  port_src="1111" port_dst="2222" fill="MESG_FILL_RANDOM" interface="ens33"/>
+		<Mesg name="MESG_2" header="HEADER_1" size="100" ip_src="127.0.0.1" ip_dst="127.0.0.1"
+			  port_src="1111" port_dst="2222" fill="MESG_FILL_ZERO"/>
+	</Messages>
+	<States>
+		<State name="ETAT_A">
+			<Operations>
+				<Op var="FLIP_FLOP" operande="=" value="0"/>
+			</Operations>
+			<State_messages>
+				<State_mesg name="MESG_1"/>
+			</State_messages>
+			<Transitions>
+				<Transit dest_state="ETAT_B">
+					<Delay value="1000000"/>
+				</Transit>
+			</Transitions>
+		</State>
+		<State name="ETAT_B">
+			<State_messages>
+				<State_mesg name="MESG_2"/>
+			</State_messages>
+			<Transitions>
+				<Transit dest_state="ETAT_D">
+					<Condition name="FLIP_FLOP" value="1" operande="=="/>
+				</Transit>
+				<Transit dest_state="ETAT_E">
+					<Condition name="FLIP_FLOP" value="2" operande="=="/>
+				</Transit>
+				<Transit dest_state="ETAT_C">
+					<Condition name="FLIP_FLOP" value="DEFAULT" operande="=="/>
+				</Transit>			
+			</Transitions>
+		</State>
+		<State name="ETAT_C">
+			<Operations>
+				<Op var="FLIP_FLOP" operande="=" value="1"/>
+			</Operations>
+			<State_messages>
+				<State_mesg name="MESG_2"/>
+			</State_messages>
+			<Transitions>
+				<Transit dest_state="ETAT_B">
+					<Delay value="5000000"/>
+				</Transit>
+			</Transitions>
+		</State>
+		<State name="ETAT_D">
+			<Operations>
+				<Op var="FLIP_FLOP" operande="=" value="2"/>
+			</Operations>
+			<State_messages>
+				<State_mesg name="MESG_2"/>
+			</State_messages>
+			<Transitions>
+				<Loop times="5" delay="1000"/>
+				<Transit dest_state="ETAT_B">
+					<Delay value="3000000"/>
+				</Transit>
+			</Transitions>
+		</State>
+		<State name="ETAT_E">
+			<Operations>
+				<Op var="FLIP_FLOP" operande="=" value="1"/>
+			</Operations>
+			<State_messages>
+				<State_mesg name="MESG_1"/>
+			</State_messages>
+			<Transitions>
+				<Transit dest_state="ETAT_B">
+					<Delay value="5000000"/>
+				</Transit>
+			</Transitions>
+		</State>
+	</States>
+</Conf>
+

@@ -1,0 +1,504 @@
+12h:30m:06s:767ms:: Log file set to C:\Users\Luc-Henri\Desktop\Logs\default-logs
+12h:30m:06s:767ms:: 
+		------ VARIABLES ------
+ 0FLIP_FLOP 0
+		------ MESSAGES ------
+Message MESG_1
+	-header    = HEADER_1
+	-interface = ens33
+	-data_size = 10
+	-src port  = 1111
+	-dst port  = 2222
+	-src ip    = 127.0.0.1
+	-dst ip    = 127.0.0.1
+	-fill meth = MESG_FILL_RANDOM
+Message MESG_2
+	-header    = HEADER_1
+	-interface = 
+	-data_size = 100
+	-src port  = 1111
+	-dst port  = 2222
+	-src ip    = 127.0.0.1
+	-dst ip    = 127.0.0.1
+	-fill meth = MESG_FILL_ZERO
+
+		------ HEADERS ------
+	Header HEADER_1
+Field FIELD_1
+	-pos         = 0
+	-size        = 5
+	-value       = 16
+	-endianness  = LITTLE_ENDIAN
+	-swap        = false
+	-invert      = true
+Field FIELD_2
+	-pos         = 5
+	-size        = 5
+	-value       = 16
+	-endianness  = LITTLE_ENDIAN
+	-swap        = false
+	-invert      = false
+Field_id FIELD_ID
+	-pos         = 62
+	-size        = 16
+	-endianness  = BIG_ENDIAN
+	-swap        = true
+	-invert      = true
+Field_size FIELD_SIZE
+	-pos         = 42
+	-size        = 8
+	-endianness  = LITTLE_ENDIAN
+	-swap        = false
+	-invert      = false
+	-format      = SIZE_FORMAT_U8
+	-part        = SIZE_INCLUDING_HEADER
+Field_time FIELD_TIME
+	-pos         = 10
+	-size        = 32
+	-format      = MILLISECONDS
+	-endianness  = LITTLE_ENDIAN
+	-swap        = false
+	-invert      = false
+
+		------ STATES ------
+State ETAT_A
+	Operations:
+		FLIP_FLOP =   (Asignement) 0
+	Messages:
+		ID - MESG_1
+	Transitions:
+		DelayCond -> ETAT_B (delay 1000000 us)
+State ETAT_B
+	Messages:
+		ID - MESG_2
+	Transitions:
+		VarCond   -> ETAT_D (test FLIP_FLOP == (equal) 1)
+		VarCond   -> ETAT_E (test FLIP_FLOP == (equal) 2)
+		VarCond   -> ETAT_C (test FLIP_FLOP == (equal) 1)
+State ETAT_C
+	Operations:
+		FLIP_FLOP =   (Asignement) 1
+	Messages:
+		ID - MESG_2
+	Transitions:
+		DelayCond -> ETAT_B (delay 5000000 us)
+State ETAT_D
+	Operations:
+		FLIP_FLOP =   (Asignement) 2
+	Messages:
+		ID - MESG_2
+	Transitions:
+		Loop      -> ETAT_D 5 times (delay 1000 us)
+		DelayCond -> ETAT_B (delay 3000000 us)
+State ETAT_E
+	Operations:
+		FLIP_FLOP =   (Asignement) 1
+	Messages:
+		ID - MESG_1
+	Transitions:
+		DelayCond -> ETAT_B (delay 5000000 us)
+
+12h:30m:06s:767ms:: ETAT_A
+12h:30m:07s:767ms:: ETAT_B
+12h:30m:07s:767ms:: ETAT_C
+12h:30m:12s:768ms:: ETAT_B
+12h:30m:12s:768ms:: ETAT_D
+12h:30m:12s:769ms:: ETAT_D
+12h:30m:12s:770ms:: ETAT_D
+12h:30m:12s:771ms:: ETAT_D
+12h:30m:12s:772ms:: ETAT_D
+12h:30m:15s:772ms:: ETAT_B
+12h:30m:15s:772ms:: ETAT_E
+12h:30m:20s:772ms:: ETAT_B
+12h:30m:20s:772ms:: ETAT_D
+12h:30m:20s:773ms:: ETAT_D
+12h:30m:20s:774ms:: ETAT_D
+12h:30m:20s:775ms:: ETAT_D
+12h:30m:20s:776ms:: ETAT_D
+12h:30m:23s:776ms:: ETAT_B
+12h:30m:23s:776ms:: ETAT_E
+12h:30m:28s:777ms:: ETAT_B
+12h:30m:28s:777ms:: ETAT_D
+12h:30m:28s:778ms:: ETAT_D
+12h:30m:28s:779ms:: ETAT_D
+12h:30m:28s:780ms:: ETAT_D
+12h:30m:28s:781ms:: ETAT_D
+12h:30m:31s:781ms:: ETAT_B
+12h:30m:31s:781ms:: ETAT_E
+12h:30m:36s:781ms:: ETAT_B
+12h:30m:36s:781ms:: ETAT_D
+12h:30m:36s:782ms:: ETAT_D
+12h:30m:36s:783ms:: ETAT_D
+12h:30m:36s:784ms:: ETAT_D
+12h:30m:36s:785ms:: ETAT_D
+12h:30m:39s:785ms:: ETAT_B
+12h:30m:39s:785ms:: ETAT_E
+12h:30m:44s:785ms:: ETAT_B
+12h:30m:44s:785ms:: ETAT_D
+12h:30m:44s:786ms:: ETAT_D
+12h:30m:44s:787ms:: ETAT_D
+12h:30m:44s:788ms:: ETAT_D
+12h:30m:44s:789ms:: ETAT_D
+12h:30m:47s:790ms:: ETAT_B
+12h:30m:47s:790ms:: ETAT_E
+12h:30m:52s:790ms:: ETAT_B
+12h:30m:52s:790ms:: ETAT_D
+12h:30m:52s:791ms:: ETAT_D
+12h:30m:52s:792ms:: ETAT_D
+12h:30m:52s:793ms:: ETAT_D
+12h:30m:52s:794ms:: ETAT_D
+12h:30m:55s:794ms:: ETAT_B
+12h:30m:55s:794ms:: ETAT_E
+12h:31m:00s:794ms:: ETAT_B
+12h:31m:00s:794ms:: ETAT_D
+12h:31m:00s:795ms:: ETAT_D
+12h:31m:00s:796ms:: ETAT_D
+12h:31m:00s:797ms:: ETAT_D
+12h:31m:00s:798ms:: ETAT_D
+12h:31m:03s:799ms:: ETAT_B
+12h:31m:03s:799ms:: ETAT_E
+12h:31m:08s:799ms:: ETAT_B
+12h:31m:08s:799ms:: ETAT_D
+12h:31m:08s:800ms:: ETAT_D
+12h:31m:08s:801ms:: ETAT_D
+12h:31m:08s:802ms:: ETAT_D
+12h:31m:08s:803ms:: ETAT_D
+12h:31m:11s:803ms:: ETAT_B
+12h:31m:11s:803ms:: ETAT_E
+12h:31m:16s:803ms:: ETAT_B
+12h:31m:16s:803ms:: ETAT_D
+12h:31m:16s:804ms:: ETAT_D
+12h:31m:16s:805ms:: ETAT_D
+12h:31m:16s:806ms:: ETAT_D
+12h:31m:16s:807ms:: ETAT_D
+12h:31m:19s:807ms:: ETAT_B
+12h:31m:19s:807ms:: ETAT_E
+12h:31m:24s:808ms:: ETAT_B
+12h:31m:24s:808ms:: ETAT_D
+12h:31m:24s:809ms:: ETAT_D
+12h:31m:24s:810ms:: ETAT_D
+12h:31m:24s:811ms:: ETAT_D
+12h:31m:24s:812ms:: ETAT_D
+12h:31m:27s:812ms:: ETAT_B
+12h:31m:27s:812ms:: ETAT_E
+12h:31m:32s:812ms:: ETAT_B
+12h:31m:32s:812ms:: ETAT_D
+12h:31m:32s:813ms:: ETAT_D
+12h:31m:32s:814ms:: ETAT_D
+12h:31m:32s:815ms:: ETAT_D
+12h:31m:32s:816ms:: ETAT_D
+12h:31m:35s:816ms:: ETAT_B
+12h:31m:35s:816ms:: ETAT_E
+12h:31m:40s:817ms:: ETAT_B
+12h:31m:40s:817ms:: ETAT_D
+12h:31m:40s:818ms:: ETAT_D
+12h:31m:40s:819ms:: ETAT_D
+12h:31m:40s:820ms:: ETAT_D
+12h:31m:40s:821ms:: ETAT_D
+12h:31m:43s:821ms:: ETAT_B
+12h:31m:43s:821ms:: ETAT_E
+12h:31m:48s:821ms:: ETAT_B
+12h:31m:48s:821ms:: ETAT_D
+12h:31m:48s:822ms:: ETAT_D
+12h:31m:48s:823ms:: ETAT_D
+12h:31m:48s:824ms:: ETAT_D
+12h:31m:48s:825ms:: ETAT_D
+12h:31m:51s:825ms:: ETAT_B
+12h:31m:51s:825ms:: ETAT_E
+12h:31m:56s:826ms:: ETAT_B
+12h:31m:56s:826ms:: ETAT_D
+12h:31m:56s:827ms:: ETAT_D
+12h:31m:56s:828ms:: ETAT_D
+12h:31m:56s:829ms:: ETAT_D
+12h:31m:56s:830ms:: ETAT_D
+12h:31m:59s:830ms:: ETAT_B
+12h:31m:59s:830ms:: ETAT_E
+12h:32m:04s:830ms:: ETAT_B
+12h:32m:04s:830ms:: ETAT_D
+12h:32m:04s:831ms:: ETAT_D
+12h:32m:04s:832ms:: ETAT_D
+12h:32m:04s:833ms:: ETAT_D
+12h:32m:04s:834ms:: ETAT_D
+12h:32m:07s:834ms:: ETAT_B
+12h:32m:07s:834ms:: ETAT_E
+12h:32m:10s:640ms:: Prgramm ended by the user (signal - 2)
+12h:36m:01s:643ms:: Log file set to C:\Users\Luc-Henri\Desktop\Logs\default-logs
+12h:36m:01s:644ms:: 
+		------ VARIABLES ------
+ 0FLIP_FLOP 0
+		------ MESSAGES ------
+Message MESG_1
+	-header    = HEADER_1
+	-interface = ens33
+	-data_size = 10
+	-src port  = 1111
+	-dst port  = 2222
+	-src ip    = 127.0.0.1
+	-dst ip    = 127.0.0.1
+	-fill meth = MESG_FILL_RANDOM
+Message MESG_2
+	-header    = HEADER_1
+	-interface = 
+	-data_size = 100
+	-src port  = 1111
+	-dst port  = 2222
+	-src ip    = 127.0.0.1
+	-dst ip    = 127.0.0.1
+	-fill meth = MESG_FILL_ZERO
+
+		------ HEADERS ------
+	Header HEADER_1
+Field FIELD_1
+	-pos         = 0
+	-size        = 5
+	-value       = 16
+	-endianness  = LITTLE_ENDIAN
+	-swap        = false
+	-invert      = true
+Field FIELD_2
+	-pos         = 5
+	-size        = 5
+	-value       = 16
+	-endianness  = LITTLE_ENDIAN
+	-swap        = false
+	-invert      = false
+Field_id FIELD_ID
+	-pos         = 62
+	-size        = 16
+	-endianness  = BIG_ENDIAN
+	-swap        = true
+	-invert      = true
+Field_size FIELD_SIZE
+	-pos         = 42
+	-size        = 8
+	-endianness  = LITTLE_ENDIAN
+	-swap        = false
+	-invert      = false
+	-format      = SIZE_FORMAT_U8
+	-part        = SIZE_INCLUDING_HEADER
+Field_time FIELD_TIME
+	-pos         = 10
+	-size        = 32
+	-format      = MILLISECONDS
+	-endianness  = LITTLE_ENDIAN
+	-swap        = false
+	-invert      = false
+
+		------ STATES ------
+State ETAT_A
+	Operations:
+		FLIP_FLOP =   (Asignement) 0
+	Messages:
+		ID - MESG_1
+	Transitions:
+		DelayCond -> ETAT_B (delay 1000000 us)
+State ETAT_B
+	Messages:
+		ID - MESG_2
+	Transitions:
+		VarCond   -> ETAT_D (test FLIP_FLOP == (equal) 1)
+		VarCond   -> ETAT_E (test FLIP_FLOP == (equal) 2)
+		VarCond   -> ETAT_C (test FLIP_FLOP == (equal) 1)
+State ETAT_C
+	Operations:
+		FLIP_FLOP =   (Asignement) 1
+	Messages:
+		ID - MESG_2
+	Transitions:
+		DelayCond -> ETAT_B (delay 5000000 us)
+State ETAT_D
+	Operations:
+		FLIP_FLOP =   (Asignement) 2
+	Messages:
+		ID - MESG_2
+	Transitions:
+		Loop      -> ETAT_D 5 times (delay 1000 us)
+		DelayCond -> ETAT_B (delay 3000000 us)
+State ETAT_E
+	Operations:
+		FLIP_FLOP =   (Asignement) 1
+	Messages:
+		ID - MESG_1
+	Transitions:
+		DelayCond -> ETAT_B (delay 5000000 us)
+
+12h:36m:01s:644ms:: ETAT_A
+12h:36m:02s:644ms:: ETAT_B
+12h:36m:02s:644ms:: ETAT_C
+12h:36m:07s:644ms:: ETAT_B
+12h:36m:07s:644ms:: ETAT_D
+12h:36m:07s:645ms:: ETAT_D
+12h:36m:07s:646ms:: ETAT_D
+12h:36m:07s:647ms:: ETAT_D
+12h:36m:07s:648ms:: ETAT_D
+12h:36m:10s:648ms:: ETAT_B
+12h:36m:10s:648ms:: ETAT_E
+12h:36m:15s:648ms:: ETAT_B
+12h:36m:15s:648ms:: ETAT_D
+12h:36m:15s:649ms:: ETAT_D
+12h:36m:15s:650ms:: ETAT_D
+12h:36m:15s:651ms:: ETAT_D
+12h:36m:15s:652ms:: ETAT_D
+12h:36m:18s:653ms:: ETAT_B
+12h:36m:18s:653ms:: ETAT_E
+12h:36m:23s:653ms:: ETAT_B
+12h:36m:23s:653ms:: ETAT_D
+12h:36m:23s:654ms:: ETAT_D
+12h:36m:23s:655ms:: ETAT_D
+12h:36m:23s:656ms:: ETAT_D
+12h:36m:23s:657ms:: ETAT_D
+12h:36m:26s:657ms:: ETAT_B
+12h:36m:26s:657ms:: ETAT_E
+12h:36m:31s:657ms:: ETAT_B
+12h:36m:31s:657ms:: ETAT_D
+12h:36m:31s:658ms:: ETAT_D
+12h:36m:31s:659ms:: ETAT_D
+12h:36m:31s:660ms:: ETAT_D
+12h:36m:31s:661ms:: ETAT_D
+12h:36m:34s:662ms:: ETAT_B
+12h:36m:34s:662ms:: ETAT_E
+12h:36m:39s:662ms:: ETAT_B
+12h:36m:39s:662ms:: ETAT_D
+12h:36m:39s:663ms:: ETAT_D
+12h:36m:39s:664ms:: ETAT_D
+12h:36m:39s:665ms:: ETAT_D
+12h:36m:39s:666ms:: ETAT_D
+12h:36m:42s:666ms:: ETAT_B
+12h:36m:42s:666ms:: ETAT_E
+12h:36m:47s:666ms:: ETAT_B
+12h:36m:47s:666ms:: ETAT_D
+12h:36m:47s:667ms:: ETAT_D
+12h:36m:47s:668ms:: ETAT_D
+12h:36m:47s:669ms:: ETAT_D
+12h:36m:47s:670ms:: ETAT_D
+12h:36m:50s:670ms:: ETAT_B
+12h:36m:50s:670ms:: ETAT_E
+12h:36m:55s:671ms:: ETAT_B
+12h:36m:55s:671ms:: ETAT_D
+12h:36m:55s:672ms:: ETAT_D
+12h:36m:55s:673ms:: ETAT_D
+12h:36m:55s:674ms:: ETAT_D
+12h:36m:55s:675ms:: ETAT_D
+12h:36m:58s:675ms:: ETAT_B
+12h:36m:58s:675ms:: ETAT_E
+12h:37m:03s:675ms:: ETAT_B
+12h:37m:03s:675ms:: ETAT_D
+12h:37m:03s:676ms:: ETAT_D
+12h:37m:03s:677ms:: ETAT_D
+12h:37m:03s:678ms:: ETAT_D
+12h:37m:03s:679ms:: ETAT_D
+12h:37m:06s:679ms:: ETAT_B
+12h:37m:06s:679ms:: ETAT_E
+12h:37m:11s:680ms:: ETAT_B
+12h:37m:11s:680ms:: ETAT_D
+12h:37m:11s:681ms:: ETAT_D
+12h:37m:11s:682ms:: ETAT_D
+12h:37m:11s:683ms:: ETAT_D
+12h:37m:11s:684ms:: ETAT_D
+12h:37m:14s:684ms:: ETAT_B
+12h:37m:14s:684ms:: ETAT_E
+12h:37m:19s:684ms:: ETAT_B
+12h:37m:19s:684ms:: ETAT_D
+12h:37m:19s:685ms:: ETAT_D
+12h:37m:19s:686ms:: ETAT_D
+12h:37m:19s:687ms:: ETAT_D
+12h:37m:19s:688ms:: ETAT_D
+12h:37m:22s:688ms:: ETAT_B
+12h:37m:22s:688ms:: ETAT_E
+12h:37m:27s:689ms:: ETAT_B
+12h:37m:27s:689ms:: ETAT_D
+12h:37m:27s:690ms:: ETAT_D
+12h:37m:27s:691ms:: ETAT_D
+12h:37m:27s:692ms:: ETAT_D
+12h:37m:27s:693ms:: ETAT_D
+12h:37m:30s:693ms:: ETAT_B
+12h:37m:30s:693ms:: ETAT_E
+12h:37m:35s:693ms:: ETAT_B
+12h:37m:35s:693ms:: ETAT_D
+12h:37m:35s:694ms:: ETAT_D
+12h:37m:35s:695ms:: ETAT_D
+12h:37m:35s:696ms:: ETAT_D
+12h:37m:35s:697ms:: ETAT_D
+12h:37m:38s:697ms:: ETAT_B
+12h:37m:38s:697ms:: ETAT_E
+12h:37m:43s:697ms:: ETAT_B
+12h:37m:43s:697ms:: ETAT_D
+12h:37m:43s:698ms:: ETAT_D
+12h:37m:43s:699ms:: ETAT_D
+12h:37m:43s:700ms:: ETAT_D
+12h:37m:43s:701ms:: ETAT_D
+12h:37m:46s:702ms:: ETAT_B
+12h:37m:46s:702ms:: ETAT_E
+12h:37m:51s:702ms:: ETAT_B
+12h:37m:51s:702ms:: ETAT_D
+12h:37m:51s:703ms:: ETAT_D
+12h:37m:51s:704ms:: ETAT_D
+12h:37m:51s:705ms:: ETAT_D
+12h:37m:51s:706ms:: ETAT_D
+12h:37m:54s:706ms:: ETAT_B
+12h:37m:54s:706ms:: ETAT_E
+12h:37m:59s:706ms:: ETAT_B
+12h:37m:59s:706ms:: ETAT_D
+12h:37m:59s:707ms:: ETAT_D
+12h:37m:59s:708ms:: ETAT_D
+12h:37m:59s:709ms:: ETAT_D
+12h:37m:59s:710ms:: ETAT_D
+12h:38m:02s:711ms:: ETAT_B
+12h:38m:02s:711ms:: ETAT_E
+12h:38m:07s:711ms:: ETAT_B
+12h:38m:07s:711ms:: ETAT_D
+12h:38m:07s:712ms:: ETAT_D
+12h:38m:07s:713ms:: ETAT_D
+12h:38m:07s:714ms:: ETAT_D
+12h:38m:07s:715ms:: ETAT_D
+12h:38m:10s:715ms:: ETAT_B
+12h:38m:10s:715ms:: ETAT_E
+12h:38m:15s:715ms:: ETAT_B
+12h:38m:15s:715ms:: ETAT_D
+12h:38m:15s:716ms:: ETAT_D
+12h:38m:15s:717ms:: ETAT_D
+12h:38m:15s:718ms:: ETAT_D
+12h:38m:15s:719ms:: ETAT_D
+12h:38m:18s:719ms:: ETAT_B
+12h:38m:18s:719ms:: ETAT_E
+12h:38m:23s:720ms:: ETAT_B
+12h:38m:23s:720ms:: ETAT_D
+12h:38m:23s:721ms:: ETAT_D
+12h:38m:23s:722ms:: ETAT_D
+12h:38m:23s:723ms:: ETAT_D
+12h:38m:23s:724ms:: ETAT_D
+12h:38m:26s:724ms:: ETAT_B
+12h:38m:26s:724ms:: ETAT_E
+12h:38m:31s:724ms:: ETAT_B
+12h:38m:31s:724ms:: ETAT_D
+12h:38m:31s:725ms:: ETAT_D
+12h:38m:31s:726ms:: ETAT_D
+12h:38m:31s:727ms:: ETAT_D
+12h:38m:31s:728ms:: ETAT_D
+12h:38m:34s:728ms:: ETAT_B
+12h:38m:34s:728ms:: ETAT_E
+12h:38m:39s:729ms:: ETAT_B
+12h:38m:39s:729ms:: ETAT_D
+12h:38m:39s:730ms:: ETAT_D
+12h:38m:39s:731ms:: ETAT_D
+12h:38m:39s:732ms:: ETAT_D
+12h:38m:39s:733ms:: ETAT_D
+12h:38m:42s:733ms:: ETAT_B
+12h:38m:42s:733ms:: ETAT_E
+12h:38m:47s:733ms:: ETAT_B
+12h:38m:47s:733ms:: ETAT_D
+12h:38m:47s:734ms:: ETAT_D
+12h:38m:47s:735ms:: ETAT_D
+12h:38m:47s:736ms:: ETAT_D
+12h:38m:47s:737ms:: ETAT_D
+12h:38m:50s:737ms:: ETAT_B
+12h:38m:50s:737ms:: ETAT_E
+12h:38m:55s:738ms:: ETAT_B
+12h:38m:55s:738ms:: ETAT_D
+12h:38m:55s:739ms:: ETAT_D
+12h:38m:55s:740ms:: ETAT_D
+12h:38m:55s:741ms:: ETAT_D
+12h:38m:55s:742ms:: ETAT_D
+12h:38m:58s:742ms:: ETAT_B
+12h:38m:58s:742ms:: ETAT_E
+12h:39m:01s:134ms:: Prgramm ended by the user (signal - 2)
