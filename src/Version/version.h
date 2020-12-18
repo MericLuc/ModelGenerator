@@ -11,8 +11,8 @@
 
 namespace ModGen {
 
-#define GIT_BRANCH_MODELGENERATOR "NA"
-#define GIT_COMMIT_HASH_MODELGENERATOR "NA"
+#define GIT_BRANCH_MODELGENERATOR "master"
+#define GIT_COMMIT_HASH_MODELGENERATOR "7925301"
 
 } // namespace ModGen
 
